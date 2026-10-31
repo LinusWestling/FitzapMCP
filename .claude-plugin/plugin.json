@@ -10,5 +10,6 @@
   },
   "homepage": "https://fitzapapps.com/ai-assistants",
   "license": "MIT",
+  "privacyPolicyUrl": "https://fitzapapps.com/privacy.html",
   "keywords": ["fitness", "workouts", "nutrition", "fitzap", "recipes"]
 }
