@@ -1,0 +1,14 @@
+{
+  "name": "fitzap",
+  "displayName": "Fitzap",
+  "version": "0.1.17",
+  "description": "Connect Fitzap training and nutrition to Claude. Review synced progress and goals, create and revise workout drafts, make approved workout edits, read, send, edit or share recipes, and make approved changes to nutrition goals.",
+  "author": {
+    "name": "Linus Westling",
+    "email": "westling.linus@gmail.com",
+    "url": "https://fitzapapps.com"
+  },
+  "homepage": "https://fitzapapps.com/ai-assistants",
+  "license": "MIT",
+  "keywords": ["fitness", "workouts", "nutrition", "fitzap", "recipes"]
+}
