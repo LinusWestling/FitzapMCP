@@ -1,7 +1,7 @@
 {
   "name": "fitzap",
   "displayName": "Fitzap",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "description": "Connect Fitzap training and nutrition to Claude. Review synced progress and goals, create and revise workout drafts, make approved workout edits, read, send, edit or share recipes, and make approved changes to nutrition goals.",
   "author": {
     "name": "Linus Westling",

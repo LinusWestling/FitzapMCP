@@ -152,6 +152,28 @@ If `push_recipe` fails with `recipe_push_unavailable`, explain the reason: `food
 
 Keep AI nutrition estimates labelled as estimates, and supply ingredient amounts in grams and nutrition per 100 g for every tool.
 
+## When a tool returns an error
+
+Failed calls return `isError: true` with `structuredContent.error`. The same facts are repeated in the text as `Error <code>: …` lines, so read the whole message before deciding what to do. Besides `code` and `message`, the error can include:
+
+- `field`, `expected` and `received`: the argument that failed (for example `exercises[0].sets[1].reps`), what was allowed and what you sent.
+- `current_version`: after a `conflict`, the current revision, `sync_version` or recipe/goal version.
+- `limit`: the cap that was reached.
+- `hint`: the concrete next step.
+- `request_id`: on `internal` errors only.
+
+How to respond:
+
+- `invalid_input`: fix the named field and call again. Use ids and versions exactly as the list/get tools returned them; never invent them. For `user_approved`, ask the user instead of setting it yourself.
+- `not_found`: the id is not visible to this connection. Re-read with the matching list tool. Don't guess another id.
+- `conflict`: the item changed since you read it. Re-read it, rebuild the change on the current version, and re-confirm with the user if the concrete change differs. `current_version` tells you what changed; it is not permission to retry blindly.
+- `approval_required`: present the concrete change and wait for explicit approval.
+- `premium_required`: tell the user the tool needs Fitzap Pro; don't retry.
+- `rate_limited`, `draft_limit_reached`, `recipe_limit_reached`, `recipe_inbox_full`: explain the limit and the user's options; wait at least `retry_after_seconds` when given.
+- `internal`: retry at most once. If it fails again, tell the user and give them the `request_id` so they can report it to Fitzap support.
+
+Sign-in problems are not tool errors: they surface as the host asking the user to connect or reconnect Fitzap.
+
 ## Connection help
 
 Setup guide: https://fitzapapps.com/ai-assistants

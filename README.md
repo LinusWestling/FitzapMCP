@@ -1,5 +1,7 @@
 # Fitzap for Claude
 
+[![mcptry](https://mcptry.com/badge/com.fitzapapps/fitzap)](https://mcptry.com/servers/com.fitzapapps/fitzap)
+
 ![Fitzap](assets/icon.png)
 
 Connect your existing Fitzap account to Claude to review synced workouts, completed sessions, personal records, training trends, your stored weekly coach report and app-computed training metrics. Compare consumed nutrition with synced energy estimates and saved nutrition goals. Create and revise pending workout drafts for review in Fitzap workout, or edit a saved workout after approving the specific changes. Read accessible recipes, send a new recipe to Fitzap nutrition, and revise recipes with your approval. Read the daily nutrition goals Fitzap nutrition is using and, after you approve the exact numbers, queue new goals for the app.
@@ -33,6 +35,24 @@ The plugin cannot log or delete completed sessions, access exact GPS routes, or 
 - Privacy policy: https://fitzapapps.com/privacy.html
 - Terms of service: https://fitzapapps.com/terms.html
 - Support: https://fitzapapps.com/faq
+
+## Errors
+
+Tool failures are returned as MCP tool results with `isError: true`, so the assistant can read them and fix its own call. `structuredContent.error` always has a stable `code` and a `message`. Depending on the failure, it can also include:
+
+| Field | Meaning |
+|---|---|
+| `field`, `expected`, `received` | The argument that failed, e.g. `exercises[0].sets[1].reps`, what was allowed, and what was sent. |
+| `current_version` | After a `conflict`: the current draft revision, workout `sync_version`, or recipe/goal version to re-read against. |
+| `limit` | The cap that was reached. |
+| `reason` | Why recipe delivery or goal changes are unavailable. |
+| `retry_after_seconds` | When rate limits reset. |
+| `hint` | The concrete next step. |
+| `request_id` | For unexpected `internal` errors only. Include it when you report a problem to support. |
+
+The same details are repeated in the text content as `Error <code>: …` lines for clients that only show text. Codes: `invalid_input`, `not_found`, `conflict`, `approval_required`, `premium_required`, `rate_limited`, `draft_limit_reached`, `recipe_limit_reached`, `recipe_inbox_full`, `recipe_push_unavailable`, `goal_update_unavailable`, `nutrition_unavailable`, `invalid_nutrition_data`, `result_too_large`, `internal`. Errors never include database details or other users' data.
+
+Sign-in failures (missing, expired or revoked access) are not tool errors. The server answers with a plain HTTP 401 and the standard OAuth discovery challenge, and Claude prompts you to reconnect.
 
 ## License
 
